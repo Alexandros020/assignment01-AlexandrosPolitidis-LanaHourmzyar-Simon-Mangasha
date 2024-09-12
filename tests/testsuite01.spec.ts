@@ -20,3 +20,27 @@ test('Test case 01', async ({ page }) => {
   await page.waitForTimeout(5000);
 
 });
+
+test('Test case 02', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+  await loginPage.usernameTextfield.fill('tester01');
+  await loginPage.passwordTextfield.fill('hej123');
+  await page.getByRole('button', { name: 'Login' }).click();
+  await expect(page.locator('#app > div > div')).toBeVisible();
+});
+
+test('Test case 03', async ({ page }) => {
+  const createBill = new CreateBill(page);
+
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+  await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
+  await createBill.billsView.click();
+  await createBill.createBillBtn.click();
+  await createBill.value.fill('5000');
+  await createBill.save.click();
+  await expect(page.locator('#app > div > div.bills > div:nth-child(2) > h3')).toBeVisible();
+
+
+});
