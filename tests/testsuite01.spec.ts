@@ -61,3 +61,24 @@ test('Test case 04', async ({ page }) => {
 
 
 });
+
+
+test('Test case 05', async ({ page }) => {
+  const createRoom = new CreateRoom(page);
+
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+  await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
+  await createRoom.roomView.click();
+  await createRoom.createRoomBtn.click();
+  await createRoom.category.selectOption({ index: 2 });
+  await createRoom.number.fill('401');
+  await createRoom.floor.fill('4');
+  await createRoom.available.click();
+  await createRoom.price.fill('8000');
+  await createRoom.features.selectOption({ index: 0 });
+  await createRoom.save.click();
+  // await expect(page).toHaveURL(/rooms$/); chatgpts kod
+  await expect(page.locator('#app > div > div.rooms > div:nth-child(3)')).toBeVisible();
+
+});
