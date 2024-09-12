@@ -7,6 +7,8 @@ import { CreateRoom } from './pages/create-room-page';
 import { EditClient } from './pages/edit-client-page';
 import { DeleteBills } from './pages/delete-bills-page';
 import { CreateReservation } from './pages/create-reservation-page';
+import { EditReservation } from './pages/edit-reservation-page';
+import { CreateBillsChooseInReservation } from './pages/create-bills-choose-in-reservation-page';
 
 test('Test case 01', async ({ page }) => {
   const loginPage = new LoginPage(page);
@@ -78,7 +80,6 @@ test('Test case 05', async ({ page }) => {
   await createRoom.price.fill('8000');
   await createRoom.features.selectOption({ index: 0 });
   await createRoom.save.click();
-  // await expect(page).toHaveURL(/rooms$/); chatgpts kod
   await expect(page.locator('#app > div > div.rooms > div:nth-child(3)')).toBeVisible();
 
 });
@@ -133,4 +134,23 @@ test('Test case 08', async ({ page }) => {
 
 });
 
+test('Test case 09', async ({ page }) => {
+  const editreservation = new EditReservation(page);
 
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+  await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
+  await editreservation.reservationView.click();
+  await editreservation.dotsBtn.click();
+  await editreservation.editReservationBtn.click();
+  await editreservation.start.fill('2024-05-08');
+  await editreservation.end.fill('2024-05-09');
+  await editreservation.client.selectOption({ index: 3 });
+  await editreservation.room.selectOption({ index: 1 });
+  await editreservation.bill.selectOption({ index: 1 });
+  await editreservation.save.click();
+  await expect(page.locator('#app > div > div.reservations > div:nth-child(2) > h3')).toBeVisible();
+
+
+
+});
