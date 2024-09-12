@@ -82,3 +82,35 @@ test('Test case 05', async ({ page }) => {
   await expect(page.locator('#app > div > div.rooms > div:nth-child(3)')).toBeVisible();
 
 });
+
+test('Test case 06', async ({ page }) => {
+  const editClient = new EditClient(page);
+
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+  await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
+  await editClient.clientView.click();
+  await editClient.dotsBtn.click();
+  await editClient.editClientBtn.click();
+  await editClient.name.fill('Pernilla Svensson');
+  await editClient.email.fill('PernillaSvensson@gmail.com');
+  await editClient.telephone.fill('0700000000');
+  await editClient.save.click();
+  await expect(page.locator('#app > div > div.clients > div:nth-child(1)')).toBeVisible();
+
+
+
+});
+
+test('Test case 07', async ({ page }) => {
+  const deleteBills = new DeleteBills(page);
+
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+  await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
+  await deleteBills.billsView.click();
+  await deleteBills.dotsBtn.click();
+  await deleteBills.deleteBtn.click();
+  await expect(page.locator('#app > div > div.bills > div:nth-child(1) > div.paid')).toBeVisible();
+
+});
