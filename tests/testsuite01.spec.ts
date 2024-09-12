@@ -114,3 +114,22 @@ test('Test case 07', async ({ page }) => {
   await expect(page.locator('#app > div > div.bills > div:nth-child(1) > div.paid')).toBeVisible();
 
 });
+
+test('Test case 08', async ({ page }) => {
+  const createreservation = new CreateReservation(page);
+
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+  await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
+  await createreservation.reservationView.click();
+  await createreservation.createReservationBtn.click();
+  await createreservation.Start.fill('2024-05-05');
+  await createreservation.End.fill('2024-05-06');
+  await createreservation.Client.selectOption({ index: 3 }); 
+  await createreservation.Room.selectOption({ index: 1 });
+  await createreservation.Bill.selectOption({ index: 1 });
+  await createreservation.save.click();
+  await expect(page.locator('#app > div > div.reservations > div:nth-child(2) > div.end')).toBeVisible();
+
+});
+
