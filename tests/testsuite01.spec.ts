@@ -44,3 +44,20 @@ test('Test case 03', async ({ page }) => {
 
 
 });
+
+test('Test case 04', async ({ page }) => {
+  const createClient = new CreateClient(page);
+
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+  await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
+  await createClient.clientView.click();
+  await createClient.createClientBtn.click();
+  await createClient.name.fill('GunnarGren');
+  await createClient.email.fill('GunnarGren@gmail.com');
+  await createClient.telephone.fill('0700000000');
+  await createClient.save.click();
+  await expect(page.locator('#app > div > div.clients > div:nth-child(3)')).toBeVisible();
+
+
+});
