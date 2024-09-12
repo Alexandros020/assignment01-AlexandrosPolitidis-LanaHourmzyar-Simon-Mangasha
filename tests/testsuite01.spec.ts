@@ -152,5 +152,28 @@ test('Test case 09', async ({ page }) => {
   await expect(page.locator('#app > div > div.reservations > div:nth-child(2) > h3')).toBeVisible();
 
 
+});
+
+test('Test case 10', async ({ page }) => {
+  const createbillschooseinreservation = new CreateBillsChooseInReservation(page);
+
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+  await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
+  await createbillschooseinreservation.billsView.click();
+  await createbillschooseinreservation.createBillBtn.click();
+  await createbillschooseinreservation.value.fill('4500');
+  await createbillschooseinreservation.save.click();
+  await createbillschooseinreservation.back.click();
+  await expect(page.locator('#app > div > h2')).toBeVisible();
+  await createbillschooseinreservation.reservationView.click();
+  await createbillschooseinreservation.createReservationBtn.click();
+  await createbillschooseinreservation.Start.fill('2024-09-20');
+  await createbillschooseinreservation.End.fill('2024-09-21');
+  await createbillschooseinreservation.Client.selectOption({ index: 1 }); 
+  await createbillschooseinreservation.Room.selectOption({ index: 1 });
+  await createbillschooseinreservation.Bill.selectOption({ index: 2 });
+  await createbillschooseinreservation.save.click();
+  await expect(page.locator('#app > div > h2 > div')).toBeVisible();
 
 });
