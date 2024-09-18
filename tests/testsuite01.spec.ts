@@ -44,7 +44,6 @@ test('Test case 03', async ({ page }) => {
   await createBill.save.click();
   await expect(page.locator('#app > div > div.bills > div:nth-child(2) > h3')).toBeVisible();
 
-
 });
 
 test('Test case 04', async ({ page }) => {
@@ -60,7 +59,6 @@ test('Test case 04', async ({ page }) => {
   await createClient.telephone.fill('0700000000');
   await createClient.save.click();
   await expect(page.locator('#app > div > div.clients > div:nth-child(3)')).toBeVisible();
-
 
 });
 
@@ -98,8 +96,6 @@ test('Test case 06', async ({ page }) => {
   await editClient.telephone.fill('0700000000');
   await editClient.save.click();
   await expect(page.locator('#app > div > div.clients > div:nth-child(1)')).toBeVisible();
-
-
 
 });
 
@@ -150,7 +146,6 @@ test('Test case 09', async ({ page }) => {
   await editreservation.bill.selectOption({ index: 1 });
   await editreservation.save.click();
   await expect(page.locator('#app > div > div.reservations > div:nth-child(2) > h3')).toBeVisible();
-
 
 });
 
