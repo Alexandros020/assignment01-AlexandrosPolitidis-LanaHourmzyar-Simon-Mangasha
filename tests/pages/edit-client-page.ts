@@ -1,8 +1,6 @@
-//edit-client-page.ts
 import { expect, type Locator, type Page } from '@playwright/test';
 
 export class EditClient {
-  //Attributes
   readonly page: Page;
   readonly clientView: Locator;
   readonly dotsBtn: Locator;
@@ -12,17 +10,30 @@ export class EditClient {
   readonly telephone: Locator;
   readonly save: Locator;
   readonly aftersave: Locator;
-  //Const
+
   constructor(page: Page) {
     this.page = page;
     this.clientView = page.locator('#app > div > div > div:nth-child(2) > a');
-    this.dotsBtn = page.locator('#app > div > div.clients > div:nth-child(1) > div.action')
-    this.editClientBtn = page.locator('#app > div > div.clients > div:nth-child(1) > div.menu > a:nth-child(1)')
-    this.name = page.locator('#app > div > div:nth-child(2) > div:nth-child(3) > input[type=text]')
-    this.email = page.locator('#app > div > div:nth-child(2) > div:nth-child(4) > input[type=email]')
-    this.telephone = page.locator('#app > div > div:nth-child(2) > div:nth-child(5) > input[type=text]')
-    this.save = page.locator('#app > div > div.actions > a.btn.blue')
-    this.aftersave = page.locator ('#app > div > div.clients > div:nth-child(1)')
+    this.dotsBtn = page.locator('#app > div > div.clients > div:nth-child(1) > div.action');
+    this.editClientBtn = page.locator('#app > div > div.clients > div:nth-child(1) > div.menu > a:nth-child(1)');
+    this.name = page.locator('#app > div > div:nth-child(2) > div:nth-child(3) > input[type=text]');
+    this.email = page.locator('#app > div > div:nth-child(2) > div:nth-child(4) > input[type=email]');
+    this.telephone = page.locator('#app > div > div:nth-child(2) > div:nth-child(5) > input[type=text]');
+    this.save = page.locator('#app > div > div.actions > a.btn.blue');
+    this.aftersave = page.locator('#app > div > div.clients > div:nth-child(1)');
   }
 
+  async editClient(clientName: string, clientEmail: string, clientPhone: string) {
+    await this.clientView.click();
+    await this.dotsBtn.click();
+    await this.editClientBtn.click();
+    await this.name.fill(clientName);
+    await this.email.fill(clientEmail);
+    await this.telephone.fill(clientPhone);
+    await this.save.click();
+  }
+
+  async verifyClientEdited() {
+    await expect(this.aftersave).toBeVisible();
+  }
 }
